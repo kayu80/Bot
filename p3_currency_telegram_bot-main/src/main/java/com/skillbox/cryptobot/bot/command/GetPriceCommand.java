@@ -10,14 +10,10 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 
-/**
- * Обработка команды получения текущей стоимости валюты
- */
 @Service
 @Slf4j
 @AllArgsConstructor
 public class GetPriceCommand implements IBotCommand {
-
     private final CryptoCurrencyService service;
 
     @Override
@@ -27,18 +23,22 @@ public class GetPriceCommand implements IBotCommand {
 
     @Override
     public String getDescription() {
-        return "Возвращает цену биткоина в USD";
+        return "Получить текущую цену биткоина.";
     }
 
     @Override
     public void processMessage(AbsSender absSender, Message message, String[] arguments) {
         SendMessage answer = new SendMessage();
         answer.setChatId(message.getChatId());
+
         try {
-            answer.setText("Текущая цена биткоина " + TextUtil.toString(service.getBitcoinPrice()) + " USD");
+            double price = service.getBitcoinPrice();
+            answer.setText("Текущая цена биткоина: $" + price);
             absSender.execute(answer);
         } catch (Exception e) {
-            log.error("Ошибка возникла /get_price методе", e);
+            log.error("Ошибка получения цены биткоина.", e);
+            answer.setText("Не удалось получить текущую цену биткоина.");
+            absSender.execute(answer);
         }
     }
 }
