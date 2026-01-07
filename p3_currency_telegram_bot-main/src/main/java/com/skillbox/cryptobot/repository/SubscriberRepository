@@ -1,1 +1,18 @@
+package com.skillbox.cryptobot.repository;
 
+import com.skillbox.cryptobot.model.Subscriber;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import java.util.Optional;
+
+@Repository
+public interface SubscriberRepository extends JpaRepository<Subscriber, Long> {
+
+    Optional<Subscriber> findByTelegramId(Long telegramId);
+
+    boolean existsByTelegramId(Long telegramId);
+
+    boolean existsByTelegramIdAndDesiredPriceIsNotNull(Long telegramId);
+
+    void deleteByTelegramId(Long telegramId);
+}
