@@ -1,1 +1,39 @@
+package com.skillbox.cryptobot.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.util.UUID;
+
+@Entity
+@Table(name = "subscribers")
+public class Subscriber {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    @Column(nullable = false, unique = true)
+    private UUID uuid;
+
+    @Column(nullable = false)
+    private Long telegramId;
+
+    @Column(precision = 18, scale = 2)
+    private Double desiredPrice;
+
+    public Subscriber(long telegramId) {
+    }
+
+    public void setDesiredPrice(double targetPrice) {
+    }
+
+    public void setDesiredPrice(Double o) {
+    }
+
+    public void setTargetPrice(Double targetPrice) {
+    }
+}
